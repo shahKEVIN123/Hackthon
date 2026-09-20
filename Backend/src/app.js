@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const authRoutes = require('./routes/authRoutes');
+const tripRoutes = require('./routes/tripRoutes');
 
 const app = express();
 
@@ -15,6 +16,9 @@ app.get('/', (req, res) => {
 
 // Mounts all authentication endpoints under the requested API prefix.
 app.use('/api/auth', authRoutes);
+
+// Protects trip creation and retrieval endpoints with the shared JWT middleware.
+app.use('/api/trips', tripRoutes);
 
 // Converts malformed JSON and unexpected errors into consistent API responses.
 app.use((error, req, res, next) => {
