@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const authRoutes = require('./routes/authRoutes');
 const tripRoutes = require('./routes/tripRoutes');
+const adminRoutes = require('./routes/adminRoutes');
 
 const app = express();
 
@@ -19,6 +20,9 @@ app.use('/api/auth', authRoutes);
 
 // Protects trip creation and retrieval endpoints with the shared JWT middleware.
 app.use('/api/trips', tripRoutes);
+
+// Admin-only endpoints use the existing JWT middleware and a dedicated role check.
+app.use('/api/admin', adminRoutes);
 
 // Converts malformed JSON and unexpected errors into consistent API responses.
 app.use((error, req, res, next) => {

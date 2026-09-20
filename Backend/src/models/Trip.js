@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 
-// Stores a trip as a private record owned by the authenticated user. The
-// structure keeps the core booking details stable while leaving room for future
-// itinerary, budget, and sharing features without changing the ownership model.
+// Stores both the user-specific trip flow and the admin trip plan record in the
+// same collection, while keeping the ownership model and planned itinerary fields.
 const tripSchema = new mongoose.Schema(
 	{
 		user: {
@@ -16,6 +15,15 @@ const tripSchema = new mongoose.Schema(
 			required: [true, 'Destination is required'],
 			trim: true,
 		},
+		description: {
+			type: String,
+			default: '',
+			trim: true,
+		},
+		coverImage: {
+			type: String,
+			default: '',
+		},
 		startDate: {
 			type: Date,
 			required: [true, 'Start date is required'],
@@ -23,6 +31,21 @@ const tripSchema = new mongoose.Schema(
 		endDate: {
 			type: Date,
 			required: [true, 'End date is required'],
+		},
+		duration: {
+			type: Number,
+			default: 1,
+			min: [1, 'Duration must be a positive number'],
+		},
+		estimatedBudget: {
+			type: Number,
+			default: 0,
+			min: [0, 'Estimated budget cannot be negative'],
+		},
+		currency: {
+			type: String,
+			default: 'USD',
+			trim: true,
 		},
 		travelers: {
 			type: Number,
@@ -32,7 +55,11 @@ const tripSchema = new mongoose.Schema(
 		status: {
 			type: String,
 			default: 'draft',
-			enum: ['draft'],
+			enum: ['draft', 'published'],
+		},
+		featured: {
+			type: Boolean,
+			default: false,
 		},
 	},
 	{ timestamps: true }

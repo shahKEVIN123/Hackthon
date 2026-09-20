@@ -33,6 +33,11 @@ const userSchema = new mongoose.Schema(
 		},
 		city: { type: String, required: [true, 'City is required'], trim: true },
 		country: { type: String, required: [true, 'Country is required'], trim: true },
+		role: {
+			type: String,
+			enum: ['user', 'admin'],
+			default: 'user',
+		},
 		password: { type: String, required: [true, 'Password is required'], select: false },
 		resetPasswordToken: { type: String, select: false },
 		resetPasswordExpires: { type: Date, select: false },
