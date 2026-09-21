@@ -6,7 +6,8 @@ const seedAdmin = async () => {
 	const password = process.env.ADMIN_PASSWORD;
 
 	if (!email || !password) {
-		throw new Error('ADMIN_EMAIL and ADMIN_PASSWORD must be configured');
+		console.warn('Warning: ADMIN_EMAIL and ADMIN_PASSWORD are not configured. Skipping admin account seeding.');
+		return;
 	}
 
 	const passwordHash = await bcrypt.hash(password, 12);
