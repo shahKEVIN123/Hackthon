@@ -18,6 +18,7 @@ const safeUser = (user) => ({
 	phoneNumber: user.phoneNumber,
 	city: user.city,
 	country: user.country,
+	role: user.role,
 });
 
 // Creates an account from the supplied profile and password fields. It
